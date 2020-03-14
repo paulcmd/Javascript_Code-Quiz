@@ -153,4 +153,29 @@ function renderHighScores() {
     storedHighScores = JSON.parse(storedHighScores);
     console.log("list", storedHighScores);
     console.log(highScoreContainer);
+
+    //Variable that creates an ordered list to store user Initials and High Score
+
+    var containerList = document.createElement("ol");
+    containerList.setAttribute("id", "scoreList");
+    for( var i = 0; i < storedHighScores.length; i++){
+        var highScore = document.createElement("li");
+        highScore.setAttribute("class", "list-group-item list-group-item-success");
+
+        highScore.innerHTML = storedHighScores[i].initials + "" + storedHighScores[i].score;
+
+        containerList.appendChild(highScore);
+    }
+    highScoreContainer.appendChild(containerList);
 }
+renderHighScores();
+
+//This code allows the user to clear local storage once quiz is finished
+
+var clearButton = document.querySelector("#clear-storage");
+clearButton.addEventListener("click", function () {
+    localStorage.removeItem("highScoreList");
+
+    renderHighScores();
+
+});
