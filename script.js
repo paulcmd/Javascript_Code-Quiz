@@ -79,10 +79,10 @@ function checkAnswer(question, answer) {
 
     else
         questionNumber = questionNumber - 1;
-        countDown = countDown - 15;
-        score = score - 15;
-        console.log("Next question : ", questionNumber);
-        console.log("Incorrect");
+    countDown = countDown - 15;
+    score = score - 15;
+    console.log("Next question : ", questionNumber);
+    console.log("Incorrect");
 }
 
 clearQuestionDiv();
@@ -94,14 +94,15 @@ endQuiz();
 function setTime() {
     document.getElementById("quiz-time").innerHTML = countDown + "secs left";
     countDown--;
-    if(countDown === -1){
+    if (countDown === -1) {
         clearInterval(quizTime);
     }
     endQuiz();
 }
+
 // This function checks to see whether these conditions are being met
 function endQuiz() {
-    if(questionNumber >=4 || countDown <=4){
+    if (questionNumber >= 4 || countDown <= 4) {
         document.getElementById("quiz-questions").classList.add("d-none");
         document.getElementById("all-done").classList.remove("d-none");
         document.getElementById("quiz-time").innerHTML = countDown + "secs left";
@@ -122,13 +123,13 @@ function saveScore() {
     var finalScore = countDown;
 
     //Storing Initial and High scores
-    var scoreObject = {initials: userInitials, score : finalScore};
+    var scoreObject = {initials: userInitials, score: finalScore};
 
     var highScores = localStorage.getItem("highScoreList");
 
     let highScoreList;
     if (highScores === null) {
-        localStorage.setItem("highScoreList", JSON.stringify([scoreObject]))
+        localStorage.setItem("highScoreList", JSON.stringify([scoreObject]));
         console.log(highScores);
     } else {
         highScoreList = JSON.parse(highScores);
@@ -143,6 +144,13 @@ function saveScore() {
 //This function renders the user High Score
 
 function renderHighScores() {
-    var highScoreContainer = document.getElementById("finalScoreListContainer")
+    var highScoreContainer = document.getElementById("finalScoreListContainer");
 
+    var storedHighScores = localStorage.getItem("highScoreList");
+    if (storedHighScores === null) {
+        document.getElementById("scoreList").remove();
+    }
+    storedHighScores = JSON.parse(storedHighScores);
+    console.log("list", storedHighScores);
+    console.log(highScoreContainer);
 }
