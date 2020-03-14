@@ -54,3 +54,95 @@ function renderQuestionChoices() {
     endQuiz();
 }
 
+//This function clears the divs for the next question
+
+function clearQuestionDiv() {
+    console.log("Clearing divs");
+    document.getElementById("question-choices").innerHTML = "";
+    endQuiz();
+}
+
+// This function checks whether the user selected the correct answer
+
+function checkAnswer(question, answer) {
+    console.log("Question : ", question);
+    console.log("Answer : ", answer);
+    var correctAnswer = questions[question].answer;
+    var userAnswer = questions[question].choices[answer];
+    if (correctAnswer === userAnswer) {
+        questionNumber = questionNumber + 1;
+        console.log(score);
+        console.log("Correct");
+    }
+
+    //else if answer is wrong, program deducts 15 secs from the quiz clock
+
+    else
+        questionNumber = questionNumber - 1;
+        countDown = countDown - 15;
+        score = score - 15;
+        console.log("Next question : ", questionNumber);
+        console.log("Incorrect");
+}
+
+clearQuestionDiv();
+renderQuestions();
+endQuiz();
+
+//This function starts the countdown for the time left quiz timer when user clicks the start button
+
+function setTime() {
+    document.getElementById("quiz-time").innerHTML = countDown + "secs left";
+    countDown--;
+    if(countDown === -1){
+        clearInterval(quizTime);
+    }
+    endQuiz();
+}
+// This function checks to see whether these conditions are being met
+function endQuiz() {
+    if(questionNumber >=4 || countDown <=4){
+        document.getElementById("quiz-questions").classList.add("d-none");
+        document.getElementById("all-done").classList.remove("d-none");
+        document.getElementById("quiz-time").innerHTML = countDown + "secs left";
+        document.getElementById("final-score").innerHTML = countDown;
+
+        clearInterval(quizTime);
+    }
+
+}
+
+//Event listener initiates the function that allows the user to save their initial and high scores
+document.getElementById("Initials-button").addEventListener("click", saveScore);
+
+//Function for saving High and Initial scores
+
+function saveScore() {
+    var userInitials = document.querySelector("#initial-input").value;
+    var finalScore = countDown;
+
+    //Storing Initial and High scores
+    var scoreObject = {initials: userInitials, score : finalScore};
+
+    var highScores = localStorage.getItem("highScoreList");
+
+    let highScoreList;
+    if (highScores === null) {
+        localStorage.setItem("highScoreList", JSON.stringify([scoreObject]))
+        console.log(highScores);
+    } else {
+        highScoreList = JSON.parse(highScores);
+        console.log(typeof highScoreList);
+        highScoreList.push(scoreObject);
+        localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
+
+    }
+
+}
+
+//This function renders the user High Score
+
+function renderHighScores() {
+    var highScoreContainer = document.getElementById("finalScoreListContainer")
+
+}
