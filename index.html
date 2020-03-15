@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang = "en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous">
-    <title>Coding Quiz Challenge</title>
+          crossorigin="anonymous"
+    />
+    <title>Javascript Code Quiz</title>
 </head>
 <body>
 <header>
@@ -20,11 +31,12 @@
 <div class="container mt-5" id="start-quiz">
     <div class="row">
         <div class="col-md">
-            <h1 class="text-center" id="quiz-title">Coding Quiz Challenge</h1>
+            <h1 class="text-center" id="quiz-title">Javascript Code Quiz</h1>
             <div class="text-center" id="quiz-description">
                 <p>
-                    Try to answer the following code related questions within the time limit. Keep in mind
-                    that incorrect answers will penalize your score/time by 10 seconds!
+                    Welcome to the code quiz. Press the start button to
+                    begin. You lose 15 seconds if you choose
+                    the wrong answer.
                 </p>
             </div>
             <div class="text-center" id="quiz-start-button">
@@ -64,8 +76,8 @@
     </div>
     <div class="row justify-content-center">
         <div>
-            <p>Enter initials:</p>
-            <input type="text" id="initial-input" />
+            <p>Enter Initials:</p>
+            <label for="initial-input"></label><input type="text" id="initial-input" />
             <a href="high-scores.html">
                 <button class="btn btn-danger" id="initials-button">
                     Submit
@@ -74,23 +86,10 @@
         </div>
     </div>
 </div>
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md">
-            <h1 class="text-center" id="high-score">High Scores</h1>
-            <div id="finalScoreListContainer"></div>
 
-            <a href="index.html">
-                <button class="btn btn-lg btn-success">Go Back</button></a
-            >
-            <button id="clear-storage" class="btn btn-lg btn-success">
-                Clear High Scores
-            </button>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript" src="script.js"></script>
-<script type="text/javascript" src="questions.js"></script>
+<script type="text/javascript" src="scripts/script.js"></script>
+<script type="text/javascript" src="scripts/questions.js"></script>
+</body>
+</html>
 </body>
 </html>

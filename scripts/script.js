@@ -15,8 +15,8 @@ var quizTime;
 
 //Initiate the quiz on click of the start button
 
-document.getElementById("start-button").addEventListener("click", function (event) {
-    event.preventDefault();
+document.getElementById("start-button").addEventListener("click", event => {
+    console.log("hello");
     document.getElementById("start-quiz").classList.add("d-none");
     document.getElementById("quiz-questions").classList.remove("d-none");
     setTime();
@@ -28,6 +28,7 @@ document.getElementById("start-button").addEventListener("click", function (even
 
 function renderQuestions() {
     var questionsIndexLength = questions.length - 1;
+    console.log(questionsIndexLength);
     if (questionNumber <= questionsIndexLength) {
         document.getElementById("question").innerHTML = questions[questionNumber].title;
         renderQuestionChoices();
@@ -48,7 +49,8 @@ function renderQuestionChoices() {
 
         // This initiates the check answer function when the user clicks one of the choices
 
-        questionButtons.setAttribute("onclick", "checkAnswer(" + questionNumber + "," + option + ");");
+        questionButtons.setAttribute("onclick", "checkAnswer(" + questionNumber + "," + option + ");"
+        );
         questionOptionsDiv.append(questionButtons);
     }
     endQuiz();
@@ -77,18 +79,18 @@ function checkAnswer(question, answer) {
 
     //else if answer is wrong, program deducts 15 secs from the quiz clock
 
-    else
-        questionNumber = questionNumber - 1;
-    countDown = countDown - 15;
-    score = score - 15;
-    console.log("Next question : ", questionNumber);
-    console.log("Incorrect");
+    else {
+        questionNumber = questionNumber + 1;
+        countDown = countDown - 15;
+        score = score - 15;
+        console.log("Next question : ", questionNumber);
+        console.log("Incorrect");
+    }
+
+    clearQuestionDiv();
+    renderQuestions();
+    endQuiz();
 }
-
-clearQuestionDiv();
-renderQuestions();
-endQuiz();
-
 //This function starts the countdown for the time left quiz timer when user clicks the start button
 
 function setTime() {
@@ -102,7 +104,7 @@ function setTime() {
 
 // This function checks to see whether these conditions are being met
 function endQuiz() {
-    if (questionNumber >= 4 || countDown <= 4) {
+    if (questionNumber >= 4 || countDown <= 0) {
         document.getElementById("quiz-questions").classList.add("d-none");
         document.getElementById("all-done").classList.remove("d-none");
         document.getElementById("quiz-time").innerHTML = countDown + "secs left";
@@ -113,26 +115,26 @@ function endQuiz() {
 
 }
 
-//Event listener initiates the function that allows the user to save their initial and high scores
-document.getElementById("Initials-button").addEventListener("click", saveScore);
+//Event listener initiates the function that allows the user to save their initials and high scores
+document.getElementById("initials-button").addEventListener("click", saveScore);
 
-//Function for saving High and Initial scores
+//Function for saving High scores and Initials
 
 function saveScore() {
     var userInitials = document.querySelector("#initial-input").value;
     var finalScore = countDown;
 
-    //Storing Initial and High scores
+    //Storing Initials and High scores
     var scoreObject = {initials: userInitials, score: finalScore};
 
     var highScores = localStorage.getItem("highScoreList");
 
-    let highScoreList;
+
     if (highScores === null) {
         localStorage.setItem("highScoreList", JSON.stringify([scoreObject]));
         console.log(highScores);
     } else {
-        highScoreList = JSON.parse(highScores);
+        var highScoreList = JSON.parse(highScores);
         console.log(typeof highScoreList);
         highScoreList.push(scoreObject);
         localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
@@ -140,42 +142,3 @@ function saveScore() {
     }
 
 }
-
-//This function renders the user High Score
-
-function renderHighScores() {
-    var highScoreContainer = document.getElementById("finalScoreListContainer");
-
-    var storedHighScores = localStorage.getItem("highScoreList");
-    if (storedHighScores === null) {
-        document.getElementById("scoreList").remove();
-    }
-    storedHighScores = JSON.parse(storedHighScores);
-    console.log("list", storedHighScores);
-    console.log(highScoreContainer);
-
-    //Variable that creates an ordered list to store user Initials and High Score
-
-    var containerList = document.createElement("ol");
-    containerList.setAttribute("id", "scoreList");
-    for( var i = 0; i < storedHighScores.length; i++){
-        var highScore = document.createElement("li");
-        highScore.setAttribute("class", "list-group-item list-group-item-success");
-
-        highScore.innerHTML = storedHighScores[i].initials + "" + storedHighScores[i].score;
-
-        containerList.appendChild(highScore);
-    }
-    highScoreContainer.appendChild(containerList);
-}
-renderHighScores();
-
-//This code allows the user to clear local storage once quiz is finished
-
-var clearButton = document.querySelector("#clear-storage");
-clearButton.addEventListener("click", function () {
-    localStorage.removeItem("highScoreList");
-
-    renderHighScores();
-
-});
