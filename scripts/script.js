@@ -15,8 +15,7 @@ var quizTime;
 
 //Initiate the quiz on click of the start button
 
-document.getElementById("start-button").addEventListener("click", event => {
-    console.log("hello");
+document.getElementById("start-button").addEventListener("click", function () {
     document.getElementById("start-quiz").classList.add("d-none");
     document.getElementById("quiz-questions").classList.remove("d-none");
     setTime();
